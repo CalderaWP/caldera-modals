@@ -135,7 +135,6 @@
 
 	$.fn.calderaModal = function(opts){
 		var defaults    = $.extend(true, {
-			contentMode			:	"clone",
 			height				:	550,
 			width				:	620,
 			padding				:	12,
@@ -241,10 +240,10 @@
 				// is jquery selector?
 				  try {
 				  	var contentElement = $( defaults.content );
-				  	if( defaults.contentMode === 'clone' ){
-				  		contentElement.clone().appendTo( calderaModals[ modalId ].content );
+				  	if( contentElement.length ){
+				  		calderaModals[ modalId ].content.html( contentElement.html() );
 				  	}else{
-				  		contentElement.appendTo( calderaModals[ modalId ].content );
+				  		calderaModals[ modalId ].content.html( defaults.content );
 				  	}
 				  } catch (err) {
 				  	calderaModals[ modalId ].content.html( defaults.content );
