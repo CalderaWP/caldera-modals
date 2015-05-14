@@ -94,9 +94,11 @@
 
 
 		// set final height
-		calderaModals[ modalId ].body.css( { 
-			height		: modalHeight			
-		} );
+		if( modalHeight != modalOuterHeight ){
+			calderaModals[ modalId ].body.css( { 
+				height		: modalHeight			
+			} );
+		}
 		calderaModals[ modalId ].modal.css( {
 			marginTop 	: top,
 			width		: modalWidth,
