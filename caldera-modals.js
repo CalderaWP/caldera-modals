@@ -114,7 +114,7 @@
 			
 			lastModal = activeModals.pop();
 
-			calderaModals[ lastModal ].modal.fadeOut( calderaModals[ lastModal ].config.speed , function(){
+			calderaModals[ lastModal ].modal.hide( 0 , function(){
 				$( this ).remove();
 				delete calderaModals[ lastModal ];
 			});
@@ -128,7 +128,7 @@
 			});
 			pageHTML.removeClass('has-caldera-modal');
 		}else{			
-			calderaModals[ activeModals[ ( activeModals.length - 1 ) ] ].modal.fadeIn( calderaModals[ activeModals[ ( activeModals.length - 1 ) ] ].config.speed );
+			calderaModals[ activeModals[ ( activeModals.length - 1 ) ] ].modal.show();
 		}
 
 	}
@@ -164,7 +164,7 @@
 		if( activeModals.length ){
 
 			if( activeModals[ ( activeModals.length - 1 ) ] !== modalId ){
-				calderaModals[ activeModals[ ( activeModals.length - 1 ) ] ].modal.fadeOut(250);
+				calderaModals[ activeModals[ ( activeModals.length - 1 ) ] ].modal.hide();
 			}
 		}
 
