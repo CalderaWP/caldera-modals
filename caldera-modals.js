@@ -160,7 +160,7 @@
 
 
 		// create modal element
-		var modalElement = trigger.data('modalElement') ? trigger.data('modalElement') : 'div',
+		var modalElement = trigger.data('element') ? trigger.data('element') : 'div',
 			modalId = trigger.data('modal');
 
 		if( activeModals.length ){
