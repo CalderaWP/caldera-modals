@@ -12,8 +12,5 @@
       "homepage": "http://cramer.co.za",
       "role": "Lead Developer"
     }
-  ],
-  "require": {
-        "composer/installers": "~1.0"
-  }
+  ]
 }
