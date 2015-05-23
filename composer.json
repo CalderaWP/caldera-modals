@@ -1,0 +1,16 @@
+{
+  "name": "calderawp/cf-users",
+  "description": "Simple modals from an HTML element.",
+  "keywords": [
+    "modals",
+    "caldera"
+  ],
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "David Cramer",
+      "homepage": "http://cramer.co.za",
+      "role": "Lead Developer"
+    }
+  ]
+}
