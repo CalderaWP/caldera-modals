@@ -62,6 +62,45 @@
     data-padding="0"
     data-content="#youtube">Click Me</button></p>        
 
+<p>Animate 200%: <button type="button" 
+    data-modal="mymodal"
+    data-title="Animate Example Modal"
+    data-height="300"
+    data-width="500"
+    data-animate="200%"
+    data-content="#modal-content">Click Me</button></p>
+
+<p>Animate -200%: <button type="button" 
+    data-modal="mymodal"
+    data-title="Animate Example Modal"
+    data-height="300"
+    data-width="500"
+    data-animate="-200%"
+    data-content="#modal-content">Click Me</button></p>
+
+<p>Animate 0 -100%: <button type="button" 
+    data-modal="mymodal"
+    data-title="Animate Example Modal"
+    data-height="300"
+    data-width="500"
+    data-animate="0 -100%"
+    data-content="#modal-content">Click Me</button></p>    
+
+<p>Animate 0 100%: <button type="button" 
+    data-modal="mymodal"
+    data-title="Animate Example Modal"
+    data-height="300"
+    data-width="500"
+    data-animate="0 100%"
+    data-content="#modal-content">Click Me</button></p>  
+
+<p>Animate -200px 100%: <button type="button" 
+    data-modal="mymodal"
+    data-title="Animate Example Modal"
+    data-height="300"
+    data-width="500"
+    data-animate="-200% 100%"
+    data-content="#modal-content">Click Me</button></p>  
 
   <h3>List of attributes available</h3>
   <table width="100%" style="width:100%;">
@@ -117,6 +156,21 @@
         <td>data-element</td>
         <td>div</td>
         <td>string indicating main modal wrapper type. eg. form or div etc.</td>
+      </tr>
+      <tr>
+        <td>data-animate</td>
+        <td>0 0</td>
+        <td>Requires a starting point value in X Y format e.g data-animate="0 -200px"</td>
+      </tr>
+      <tr>
+        <td>data-animate-speed</td>
+        <td>0.8s</td>
+        <td>sets the speed of animation in s or ms. e.g 1s or 500ms</td>
+      </tr>
+      <tr>
+        <td>data-animate-ease</td>
+        <td>ease</td>
+        <td>sets the animation easing. [ ease | ease-in | ease-in-out | ease-in-out ]</td>
       </tr>
     </tbody>
   </table>
