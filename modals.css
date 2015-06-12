@@ -33,6 +33,12 @@ body{
   margin: 0 auto;
   z-index: 100105;
 }
+
+
+.caldera-modal-wrap.caldera-animate{
+  transform:  translate(0,0) !important;
+}
+
 .caldera-modal-title {
   border-bottom: 1px solid #EFEFEF;
 }

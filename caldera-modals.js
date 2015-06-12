@@ -91,8 +91,6 @@
 			flickerBD = false;
 		}
 
-
-
 		// set final height
 		if( modalHeight != modalOuterHeight ){
 			calderaModals[ modalId ].body.css( { 
@@ -104,9 +102,13 @@
 			width		: modalWidth,
 			height		: modalOuterHeight
 		} );
-
+		
+		setTimeout( function(){
+			calderaModals[ modalId ].modal.addClass( 'caldera-animate' );
+		}, 10);
 
 		calderaBackdrop.fadeIn( calderaModals[ modalId ].config.speed );
+
 		return calderaModals; 
 	}
 
@@ -115,15 +117,23 @@
 		if( activeModals.length ){
 			
 			lastModal = activeModals.pop();
-
-			calderaModals[ lastModal ].modal.hide( 0 , function(){
-				$( this ).remove();
-				delete calderaModals[ lastModal ];
-			});
+			if( calderaModals[ lastModal ].modal.hasClass( 'caldera-animate' ) && !activeModals.length ){
+				calderaModals[ lastModal ].modal.removeClass( 'caldera-animate' );
+				setTimeout( function(){
+					calderaModals[ lastModal ].modal.remove();
+					delete calderaModals[ lastModal ];
+				}, 500 );
+			}else{
+				calderaModals[ lastModal ].modal.hide( 0 , function(){
+					$( this ).remove();
+					delete calderaModals[ lastModal ];
+				});
+			}
 
 		}
 
 		if( !activeModals.length ){
+
 			calderaBackdrop.fadeOut( 250 , function(){
 				$( this ).remove();
 				calderaBackdrop = null;
@@ -186,7 +196,22 @@
 			calderaModals[ modalId ].config = defaults;
 			calderaModals[ modalId ].modal.empty();
 		}
+		// add animate
+		if( trigger.data( 'animate' ) ){
+			var animate 		= trigger.data( 'animate' ).split( ' ' ),
+				animateSpeed 	= ( trigger.data( 'animateSpeed' ) ? trigger.data( 'animateSpeed' ) : '0.8s' ),
+				animateEase		= ( trigger.data( 'animateEase' ) ? trigger.data( 'animateEase' ) : 'ease' );
 
+			if( animate.length === 1){
+				animate[1] = 0;
+			}
+
+			calderaModals[ modalId ].modal.css( { 
+				transform	: 'translate(' + animate[0] + ', ' + animate[1] + ')',
+				transition	: 'transform ' + animateSpeed + ' ' + animateEase
+			} );
+
+		}
 		calderaModals[ modalId ].body = $('<div>', {"class" : "caldera-modal-body",id: modalId + '_calderaModalBody'});
 		calderaModals[ modalId ].content = $('<div>', {"class" : "caldera-modal-content",id: modalId + '_calderaModalContent'});
 			
