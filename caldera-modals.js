@@ -194,19 +194,14 @@
 		}
 
 	}
-
-	$.fn.calderaModal = function(opts){
-		if( ! opts ){
-			opts = this.data();
-		}
+	$.calderaModal = function(opts){
 		var defaults    = $.extend(true, {
+			element				:	'div',
 			height				:	550,
 			width				:	620,
 			padding				:	12,
 			speed				:	250
-		}, opts ),
-		trigger 	= $( this );
-
+		}, opts );
 		if( !calderaBackdrop && ! defaults.sticky ){
 			calderaBackdrop = $('<div>', {"class" : "caldera-backdrop"});
 			calderaBackdrop.on('click', function( e ){
@@ -221,8 +216,8 @@
 
 
 		// create modal element
-		var modalElement = trigger.data('element') ? trigger.data('element') : 'div',
-			modalId = trigger.data('modal');
+		var modalElement = defaults.element,
+			modalId = defaults.modal;
 
 		if( activeModals.length ){
 
@@ -253,19 +248,21 @@
 			calderaModals[ modalId ].config = defaults;
 			calderaModals[ modalId ].modal.empty();
 		}
-		// add animate
-		if( trigger.data( 'animate' ) && calderaBackdrop ){
-			var animate 		= trigger.data( 'animate' ).split( ' ' ),
-				animateSpeed 	= ( trigger.data( 'animateSpeed' ) ? trigger.data( 'animateSpeed' ) : '0.8s' ),
-				animateEase		= ( trigger.data( 'animateEase' ) ? trigger.data( 'animateEase' ) : 'ease' );
+		// add animate		
+		if( defaults.animate && calderaBackdrop ){
+			var animate 		= defaults.animate.split( ' ' ),
+				animateSpeed 	= defaults.speed + 'ms',
+				animateEase		= ( defaults.animateEase ? defaults.animateEase : 'ease' );
 
 			if( animate.length === 1){
 				animate[1] = 0;
 			}
 
 			calderaModals[ modalId ].modal.css( { 
-				transform	: 'translate(' + animate[0] + ', ' + animate[1] + ')',
-				transition	: 'transform ' + animateSpeed + ' ' + animateEase
+				transform				: 'translate(' + animate[0] + ', ' + animate[1] + ')',
+				'-web-kit-transition'	: 'transform ' + animateSpeed + ' ' + animateEase,
+				'-moz-transition'		: 'transform ' + animateSpeed + ' ' + animateEase,
+				transition				: 'transform ' + animateSpeed + ' ' + animateEase
 			} );
 
 		}
@@ -357,6 +354,12 @@
 		return this;
 	}
 
+	$.fn.calderaModal = function( opts ){
+		if( !opts ){ opts = {}; }
+		opts = $.extend( {}, this.data(), opts );
+		return $.calderaModal( opts );
+	}
+
 	// setup resize positioning and keypresses
     if ( window.addEventListener ) {
         window.addEventListener( "resize", positionModals, false );
@@ -380,7 +383,7 @@
 	});
 	$(window).load( function(){
 		$('[data-modal][data-autoload]').each( function(){
-			$( this ).calderaModal();
+			//$( this ).calderaModal();
 		});
 	});
 
