@@ -3,18 +3,17 @@
  	var calderaBackdrop = null,
  		calderaModals 	= {},
  		activeModals 	= [],
+ 		activeSticky	= [],
 		pageHTML		= $('html'),
 		pageBody		= $('body'),
  		mainWindow 		= $(window);
 
 	var positionModals = function(){
 
-		if( !activeModals.length ){
+		if( !activeModals.length && !activeSticky.length ){
 			return;
 		}
-		pageHTML.addClass('has-caldera-modal');
-
-		var modalId	 = activeModals[ ( activeModals.length - 1 ) ],
+		var modalId	 = ( activeModals.length ? activeModals[ ( activeModals.length - 1 ) ] : activeSticky[ ( activeSticky.length - 1 ) ] ),
 			windowWidth  = mainWindow.width(),
 			windowHeight = mainWindow.height(),
 			modalHeight  = calderaModals[ modalId ].config.height,
@@ -24,56 +23,62 @@
 			flickerBD	 = false,
 			modalReduced = false;
 
+		if( calderaBackdrop ){ pageHTML.addClass('has-caldera-modal'); }
+
 		// top
 		top = (windowHeight - calderaModals[ modalId ].config.height ) / 2.2;
 
 		if( top < 0 ){
 			top = 0;
 		}
-		if( modalHeight + ( calderaModals[ modalId ].config.padding * 2 ) > windowHeight ){
+		if( modalHeight + ( calderaModals[ modalId ].config.padding * 2 ) > windowHeight && calderaBackdrop ){
 			modalHeight = windowHeight - ( calderaModals[ modalId ].config.padding * 2 );
 			modalOuterHeight = '100%';
-			calderaBackdrop.css( {
-				paddingTop: calderaModals[ modalId ].config.padding,
-				paddingBottom: calderaModals[ modalId ].config.padding,
-			});
+			if( calderaBackdrop ){ 
+				calderaBackdrop.css( {
+					paddingTop: calderaModals[ modalId ].config.padding,
+					paddingBottom: calderaModals[ modalId ].config.padding,
+				});
+			}
 			modalReduced = true;
 		}
 		if( modalWidth + ( calderaModals[ modalId ].config.padding * 2 ) >= windowWidth ){
 			modalWidth = '100%';
-			calderaBackdrop.css( {
-				paddingLeft: calderaModals[ modalId ].config.padding,
-				paddingRight: calderaModals[ modalId ].config.padding,
-			});
+			if( calderaBackdrop ){ 
+				calderaBackdrop.css( {
+					paddingLeft: calderaModals[ modalId ].config.padding,
+					paddingRight: calderaModals[ modalId ].config.padding,
+				});
+			}
 			modalReduced = true;
 		}
 
 		if( true === modalReduced ){
 			if( windowWidth <= 700 && windowWidth > 600 ){
-				modalHeight = windowHeight - ( calderaModals[ modalId ].config.padding * 2 );
+				if( calderaBackdrop ){ modalHeight = windowHeight - ( calderaModals[ modalId ].config.padding * 2 ); }
 				modalWidth = windowWidth;
 				modalOuterHeight = modalHeight - ( calderaModals[ modalId ].config.padding * 2 );
 				modalWidth = '100%';
 				top = 0;
-				calderaBackdrop.css( { padding : calderaModals[ modalId ].config.padding } );
+				if( calderaBackdrop ){ calderaBackdrop.css( { padding : calderaModals[ modalId ].config.padding } ); }
 			}else if( windowWidth <= 600 ){
-				modalHeight = windowHeight;
+				if( calderaBackdrop ){ modalHeight = windowHeight; }
 				modalWidth = windowWidth;
 				modalOuterHeight = '100%';
 				top = 0;
-				calderaBackdrop.css( { padding : 0 } );
+				if( calderaBackdrop ){ calderaBackdrop.css( { padding : 0 } ); }
 			}
 		}
 
 
 		// set backdrop
-		if( calderaBackdrop.is(':hidden') ){
+		if( calderaBackdrop && calderaBackdrop.is(':hidden') ){
 			flickerBD = true;
 			calderaBackdrop.show();
 		}
 		// title?
 		if( calderaModals[ modalId ].header ){
-			calderaBackdrop.show();
+			if( calderaBackdrop ){ calderaBackdrop.show(); }
 			modalHeight -= calderaModals[ modalId ].header.outerHeight();
 			calderaModals[ modalId ].closer.css( { 
 				padding		: ( calderaModals[ modalId ].header.outerHeight() / 2 ) - 0.5
@@ -82,11 +87,11 @@
 		}
 		// footer?
 		if( calderaModals[ modalId ].footer ){
-			calderaBackdrop.show();
+			if( calderaBackdrop ){ calderaBackdrop.show(); }
 			modalHeight -= calderaModals[ modalId ].footer.outerHeight();			
 		}
 
-		if( flickerBD === true ){
+		if( calderaBackdrop && flickerBD === true ){
 			calderaBackdrop.hide();
 			flickerBD = false;
 		}
@@ -98,21 +103,63 @@
 			} );
 		}
 		calderaModals[ modalId ].modal.css( {
-			marginTop 	: top,
-			width		: modalWidth,
-			height		: modalOuterHeight
+			width		: modalWidth	
 		} );
-		
-		setTimeout( function(){
-			calderaModals[ modalId ].modal.addClass( 'caldera-animate' );
-		}, 10);
+		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.minimized ){
+			var toggle = {},
+				minimizedPosition = calderaModals[ modalId ].title.outerHeight() - modalOuterHeight;
+			if( calderaModals[ modalId ].config.sticky.indexOf( 'bottom' ) > -1 ){
+				toggle['margin-bottom'] = minimizedPosition;
+			}else if( calderaModals[ modalId ].config.sticky.indexOf( 'top' ) > -1 ){
+				toggle['margin-top'] = minimizedPosition;
+			}
+			calderaModals[ modalId ].modal.css( toggle );
+		}
+		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.sticky.length == 3 ){
 
-		calderaBackdrop.fadeIn( calderaModals[ modalId ].config.speed );
+			pageBody.css( "margin-" + calderaModals[ modalId ].config.sticky[0] , calderaModals[ modalId ].title.outerHeight() );
+			if( modalReduced ){
+				calderaModals[ modalId ].modal.css( calderaModals[ modalId ].config.sticky[1] , 0 );
+			}else{
+				calderaModals[ modalId ].modal.css( calderaModals[ modalId ].config.sticky[1] , parseFloat( calderaModals[ modalId ].config.sticky[2] ) );
+			}
+		}
+		if( calderaBackdrop ){
+			calderaModals[ modalId ].modal.css( {
+				marginTop 	: top,
+				height		: modalOuterHeight
+			} );
+			setTimeout( function(){
+				calderaModals[ modalId ].modal.addClass( 'caldera-animate' );
+			}, 10);
+
+			calderaBackdrop.fadeIn( calderaModals[ modalId ].config.speed );
+		}
 
 		return calderaModals; 
 	}
 
-	var closeModal = function(){
+	var closeModal = function( obj ){	
+		var modalId = $(obj).data('modal'),
+			position = 0,
+			toggle = {};
+
+		if( obj && calderaModals[ modalId ].config.sticky ){
+			if( calderaModals[ modalId ].config.minimized ){
+				calderaModals[ modalId ].config.minimized = false
+				position = 0;
+			}else{
+				calderaModals[ modalId ].config.minimized = true;
+				position = calderaModals[ modalId ].title.outerHeight() - calderaModals[ modalId ].modal.outerHeight();
+			}
+			if( calderaModals[ modalId ].config.sticky.indexOf( 'bottom' ) > -1 ){
+				toggle['margin-bottom'] = position;
+			}else if( calderaModals[ modalId ].config.sticky.indexOf( 'top' ) > -1 ){
+				toggle['margin-top'] = position;
+			}
+			calderaModals[ modalId ].modal.stop().animate( toggle , 250 );
+			return;
+		}
 		var lastModal;
 		if( activeModals.length ){
 			
@@ -124,20 +171,23 @@
 					delete calderaModals[ lastModal ];
 				}, 500 );
 			}else{
-				calderaModals[ lastModal ].modal.hide( 0 , function(){
-					$( this ).remove();
-					delete calderaModals[ lastModal ];
-				});
+				if( calderaBackdrop ){
+					calderaModals[ lastModal ].modal.hide( 0 , function(){
+						$( this ).remove();
+						delete calderaModals[ lastModal ];
+					});
+				}
 			}
 
 		}
 
 		if( !activeModals.length ){
-
-			calderaBackdrop.fadeOut( 250 , function(){
-				$( this ).remove();
-				calderaBackdrop = null;
-			});
+			if( calderaBackdrop ){ 
+				calderaBackdrop.fadeOut( 250 , function(){
+					$( this ).remove();
+					calderaBackdrop = null;
+				});
+			}
 			pageHTML.removeClass('has-caldera-modal');
 		}else{			
 			calderaModals[ activeModals[ ( activeModals.length - 1 ) ] ].modal.show();
@@ -146,17 +196,20 @@
 	}
 
 	$.fn.calderaModal = function(opts){
+		if( ! opts ){
+			opts = this.data();
+		}
 		var defaults    = $.extend(true, {
 			height				:	550,
 			width				:	620,
 			padding				:	12,
 			speed				:	250
-		}, opts ),
+		}, opts, this.data() ),
 		trigger 	= $( this );
 
 
 
-		if( !calderaBackdrop ){
+		if( !calderaBackdrop && ! defaults.sticky ){
 			calderaBackdrop = $('<div>', {"class" : "caldera-backdrop"});
 			calderaBackdrop.on('click', function( e ){
 				if( e.target == this ){
@@ -181,23 +234,29 @@
 		}
 
 		if( typeof calderaModals[ modalId ] === 'undefined' ){
-			
+			if( defaults.sticky ){
+				defaults.sticky = defaults.sticky.split(' ');
+				if( defaults.sticky.length < 2 ){
+					defaults.sticky = null;
+				}
+				activeSticky.push( modalId );
+			}
 			calderaModals[ modalId ] = {
 				config	:	defaults,
 				modal	:	$('<' + modalElement + '>', {
 					id					: modalId + '_calderaModal',
 					tabIndex			: -1,
 					"ariaLabelled-by"	: modalId + '_calderaModalLable',
-					"class"				: "caldera-modal-wrap"
+					"class"				: "caldera-modal-wrap" + ( defaults.sticky ? ' caldera-sticky-modal ' + defaults.sticky[0] + '-' + defaults.sticky[1] : '' )
 				})
 			};
-			activeModals.push( modalId );
+			if( !defaults.sticky ){ activeModals.push( modalId ); }
 		}else{
 			calderaModals[ modalId ].config = defaults;
 			calderaModals[ modalId ].modal.empty();
 		}
 		// add animate
-		if( trigger.data( 'animate' ) ){
+		if( trigger.data( 'animate' ) && calderaBackdrop ){
 			var animate 		= trigger.data( 'animate' ).split( ' ' ),
 				animateSpeed 	= ( trigger.data( 'animateSpeed' ) ? trigger.data( 'animateSpeed' ) : '0.8s' ),
 				animateEase		= ( trigger.data( 'animateEase' ) ? trigger.data( 'animateEase' ) : 'ease' );
@@ -214,27 +273,16 @@
 		}
 		calderaModals[ modalId ].body = $('<div>', {"class" : "caldera-modal-body",id: modalId + '_calderaModalBody'});
 		calderaModals[ modalId ].content = $('<div>', {"class" : "caldera-modal-content",id: modalId + '_calderaModalContent'});
-			
-		if( defaults.title ){
-			
-			calderaModals[ modalId ].header = $('<div>', {"class" : "caldera-modal-title", id : modalId + '_calderaModalTitle'});
-			calderaModals[ modalId ].closer = $('<a>', { "href" : "#close", "class":"caldera-modal-closer", "data-dismiss":"modal", "aria-hidden":"true",id: modalId + '_calderaModalCloser'}).html('&times;');
-			calderaModals[ modalId ].title = $('<h3>', {"class" : "modal-label", id : modalId + '_calderaModalLable'});
 
-			calderaModals[ modalId ].closer.appendTo( calderaModals[ modalId ].header ).on('click', function(){
-				calderaBackdrop.trigger( 'click' );
-			});
-			calderaModals[ modalId ].title.html( defaults.title ).appendTo( calderaModals[ modalId ].header );
-			calderaModals[ modalId ].title.css({ padding: defaults.padding });
-			calderaModals[ modalId ].header.appendTo( calderaModals[ modalId ].modal );
-		}
 
 		// padd content		
 		calderaModals[ modalId ].content.css( { 
 			margin : defaults.padding
 		} );
 		calderaModals[ modalId ].body.append( calderaModals[ modalId ].content ).appendTo( calderaModals[ modalId ].modal );
-		calderaBackdrop.append( calderaModals[ modalId ].modal );
+		if( calderaBackdrop ){ calderaBackdrop.append( calderaModals[ modalId ].modal ); }else{
+			calderaModals[ modalId ].modal . appendTo( $( 'body' ) );
+		}
 
 
 		if( defaults.footer ){
@@ -255,6 +303,30 @@
 			}
 		}
 
+		if( defaults.title ){
+			var headerAppend = 'prependTo';
+			calderaModals[ modalId ].header = $('<div>', {"class" : "caldera-modal-title", id : modalId + '_calderaModalTitle'});
+			calderaModals[ modalId ].closer = $('<a>', { "href" : "#close", "class":"caldera-modal-closer", "data-dismiss":"modal", "aria-hidden":"true",id: modalId + '_calderaModalCloser'}).html('&times;');
+			calderaModals[ modalId ].title = $('<h3>', {"class" : "modal-label", id : modalId + '_calderaModalLable'});
+			
+			calderaModals[ modalId ].title.html( defaults.title ).appendTo( calderaModals[ modalId ].header );
+			calderaModals[ modalId ].title.css({ padding: defaults.padding });
+
+			if( calderaModals[ modalId ].config.sticky ){
+				calderaModals[ modalId ].closer.hide();
+				calderaModals[ modalId ].title.data('modal', modalId).appendTo( calderaModals[ modalId ].header ).on('click', function(){
+					closeModal( this );
+				});
+				if( calderaModals[ modalId ].config.sticky.indexOf( 'top' ) > -1 ){
+					headerAppend = 'appendTo';
+				}
+			}else{
+				calderaModals[ modalId ].closer.data('modal', modalId).appendTo( calderaModals[ modalId ].header ).on('click', function(){
+					closeModal( this );
+				});
+			}
+			calderaModals[ modalId ].header[headerAppend]( calderaModals[ modalId ].modal );
+		}
 		// hide modal
 		calderaModals[ modalId ].modal.outerHeight( defaults.height );
 		calderaModals[ modalId ].modal.outerWidth( defaults.width );
@@ -308,6 +380,8 @@
 
 		clicked.calderaModal( clicked.data() );
 
+	}).ready( function(){
+		$('[data-modal][data-sticky]').calderaModal();
 	});
 
 
