@@ -107,21 +107,21 @@
 		} );
 		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.minimized ){
 			var toggle = {},
-				minimizedPosition = calderaModals[ modalId ].title.outerHeight() - modalOuterHeight;
+				minimizedPosition = calderaModals[ modalId ].title.outerHeight() - calderaModals[ modalId ].modal.outerHeight();
 			if( calderaModals[ modalId ].config.sticky.indexOf( 'bottom' ) > -1 ){
 				toggle['margin-bottom'] = minimizedPosition;
 			}else if( calderaModals[ modalId ].config.sticky.indexOf( 'top' ) > -1 ){
 				toggle['margin-top'] = minimizedPosition;
 			}
+			console.log( toggle );
 			calderaModals[ modalId ].modal.css( toggle );
-		}
-		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.sticky.length >= 3 ){
-
-			pageBody.css( "margin-" + calderaModals[ modalId ].config.sticky[0] , calderaModals[ modalId ].title.outerHeight() );
-			if( modalReduced ){
-				calderaModals[ modalId ].modal.css( calderaModals[ modalId ].config.sticky[1] , 0 );
-			}else{
-				calderaModals[ modalId ].modal.css( calderaModals[ modalId ].config.sticky[1] , parseFloat( calderaModals[ modalId ].config.sticky[2] ) );
+			if( calderaModals[ modalId ].config.sticky.length >= 3 ){
+				pageBody.css( "margin-" + calderaModals[ modalId ].config.sticky[0] , calderaModals[ modalId ].title.outerHeight() );
+				if( modalReduced ){
+					calderaModals[ modalId ].modal.css( calderaModals[ modalId ].config.sticky[1] , 0 );
+				}else{
+					calderaModals[ modalId ].modal.css( calderaModals[ modalId ].config.sticky[1] , parseFloat( calderaModals[ modalId ].config.sticky[2] ) );
+				}
 			}
 		}
 		if( calderaBackdrop ){
