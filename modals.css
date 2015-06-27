@@ -44,7 +44,9 @@ body{
 
 .caldera-modal-closer {
   color: #808080;
-  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
   font-size: 32px;
   text-decoration: none !important;
   line-height: 0;
@@ -130,3 +132,13 @@ body{
   background: none repeat scroll 0 0 rgb(175, 175, 0);
   color: #fff !important;
 }
+
+.caldera-sticky-modal{
+  z-index: 100099;
+  position: fixed;
+}
+.caldera-sticky-modal > .caldera-modal-title{ cursor: pointer; }
+.caldera-sticky-modal.bottom-left{ bottom: 0; left: 0; }
+.caldera-sticky-modal.bottom-right{ bottom: 0; right: 0; }
+.caldera-sticky-modal.top-left{ top: 0; left: 0; }
+.caldera-sticky-modal.top-right{ top: 0; right: 0; }

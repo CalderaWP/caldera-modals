@@ -102,6 +102,15 @@
     data-animate="-200% 100%"
     data-content="#modal-content">Click Me</button></p>  
 
+<span data-modal="stickymodals"
+    data-title="Sticky Modal Example"
+    data-height="300"
+    data-width="500"
+    data-sticky="bottom right 50"
+    data-speed="1000"
+    data-autoload="true"
+    data-content="#sticky-modal-content"></span>
+
   <h3>List of attributes available</h3>
   <table width="100%" style="width:100%;">
     <thead>
@@ -172,6 +181,21 @@
         <td>ease</td>
         <td>sets the animation easing. [ ease | ease-in | ease-in-out | ease-in-out ]</td>
       </tr>
+      <tr>
+        <td>data-autoload</td>
+        <td>false</td>
+        <td>sets the modal trigger to load on page load</td>
+      </tr>
+      <tr>
+        <td>data-sticky</td>
+        <td></td>
+        <td>enables a sliding sticky modal and sets its position. e.g <code>data-sticky="bottom right 50"</code> sets the panel to the bottom right corner with a 50px offset. </td>
+      </tr>      
+      <tr>
+        <td>data-speed</td>
+        <td></td>
+        <td>sets the general speed of the fade and sliding actions (not animation)</td>
+      </tr>      
     </tbody>
   </table>
 
@@ -191,7 +215,9 @@
 
 
   <script type="text/html" id="youtube"><iframe width="100%" height="315" src="https://www.youtube.com/embed/fMTCmZbN3bA?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></script>
-
+  <script type="text/html" id="sticky-modal-content">This is a sticky modal. essentually a sliding panel. It's created byt defining it with the <code>data-sticky="bottom left [offset]"</code>.<br>
+You can also set it to auto load with the <code>data-autoload="true"</code> and set it to be default showing by <code>data-minimized="false"</code>
+  </script>
   <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   <script type='text/javascript' src='caldera-modals.js'></script>
   </body>
