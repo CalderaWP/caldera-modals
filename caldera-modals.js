@@ -378,7 +378,8 @@
 	$(document).on('click', '[data-modal]', function( e ){
 		e.preventDefault();
 		$(this).calderaModal();
-	}).ready( function(){
+	});
+	$(window).load( function(){
 		$('[data-modal][data-autoload]').each( function(){
 			$( this ).calderaModal();
 		});
