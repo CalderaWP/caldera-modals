@@ -113,7 +113,6 @@
 			}else if( calderaModals[ modalId ].config.sticky.indexOf( 'top' ) > -1 ){
 				toggle['margin-top'] = minimizedPosition;
 			}
-			console.log( toggle );
 			calderaModals[ modalId ].modal.css( toggle );
 			if( calderaModals[ modalId ].config.sticky.length >= 3 ){
 				pageBody.css( "margin-" + calderaModals[ modalId ].config.sticky[0] , calderaModals[ modalId ].title.outerHeight() );
