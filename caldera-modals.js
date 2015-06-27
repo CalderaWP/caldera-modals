@@ -115,7 +115,7 @@
 			}
 			calderaModals[ modalId ].modal.css( toggle );
 		}
-		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.sticky.length == 3 ){
+		if( calderaModals[ modalId ].config.sticky && calderaModals[ modalId ].config.sticky.length >= 3 ){
 
 			pageBody.css( "margin-" + calderaModals[ modalId ].config.sticky[0] , calderaModals[ modalId ].title.outerHeight() );
 			if( modalReduced ){
@@ -145,6 +145,7 @@
 			toggle = {};
 
 		if( obj && calderaModals[ modalId ].config.sticky ){
+
 			if( calderaModals[ modalId ].config.minimized ){
 				calderaModals[ modalId ].config.minimized = false
 				position = 0;
@@ -157,7 +158,7 @@
 			}else if( calderaModals[ modalId ].config.sticky.indexOf( 'top' ) > -1 ){
 				toggle['margin-top'] = position;
 			}
-			calderaModals[ modalId ].modal.stop().animate( toggle , 250 );
+			calderaModals[ modalId ].modal.stop().animate( toggle , calderaModals[ modalId ].config.speed );
 			return;
 		}
 		var lastModal;
@@ -204,10 +205,8 @@
 			width				:	620,
 			padding				:	12,
 			speed				:	250
-		}, opts, this.data() ),
+		}, this.data() ),
 		trigger 	= $( this );
-
-
 
 		if( !calderaBackdrop && ! defaults.sticky ){
 			calderaBackdrop = $('<div>', {"class" : "caldera-backdrop"});
@@ -313,6 +312,9 @@
 			calderaModals[ modalId ].title.css({ padding: defaults.padding });
 
 			if( calderaModals[ modalId ].config.sticky ){
+				if( ! calderaModals[ modalId ].config.minimized ){
+					calderaModals[ modalId ].config.minimized = true;
+				}
 				calderaModals[ modalId ].closer.hide();
 				calderaModals[ modalId ].title.data('modal', modalId).appendTo( calderaModals[ modalId ].header ).on('click', function(){
 					closeModal( this );
@@ -374,14 +376,12 @@
 
 
 	$(document).on('click', '[data-modal]', function( e ){
-		
 		e.preventDefault();
-		var clicked = $(this);
-
-		clicked.calderaModal( clicked.data() );
-
+		$(this).calderaModal();
 	}).ready( function(){
-		$('[data-modal][data-sticky]').calderaModal();
+		$('[data-modal][data-autoload]').each( function(){
+			$( this ).calderaModal();
+		});
 	});
 
 
