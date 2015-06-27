@@ -142,3 +142,9 @@ body{
 .caldera-sticky-modal.bottom-right{ bottom: 0; right: 0; }
 .caldera-sticky-modal.top-left{ top: 0; left: 0; }
 .caldera-sticky-modal.top-right{ top: 0; right: 0; }
+
+.caldera-sticky-modal.top-left .caldera-modal-title ,
+.caldera-sticky-modal.top-right .caldera-modal-title {
+  border-bottom: 0;
+  border-top: 1px solid #EFEFEF;
+}
