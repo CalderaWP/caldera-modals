@@ -383,7 +383,7 @@
 	});
 	$(window).load( function(){
 		$('[data-modal][data-autoload]').each( function(){
-			//$( this ).calderaModal();
+			$( this ).calderaModal();
 		});
 	});
 
