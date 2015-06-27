@@ -205,7 +205,7 @@
 			width				:	620,
 			padding				:	12,
 			speed				:	250
-		}, this.data() ),
+		}, opts ),
 		trigger 	= $( this );
 
 		if( !calderaBackdrop && ! defaults.sticky ){
