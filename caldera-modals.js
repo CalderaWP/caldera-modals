@@ -306,7 +306,7 @@
 			
 			calderaModals[ modalId ].title.html( defaults.title ).appendTo( calderaModals[ modalId ].header );
 			calderaModals[ modalId ].title.css({ padding: defaults.padding });
-
+			calderaModals[ modalId ].title.append( calderaModals[ modalId ].closer );
 			if( calderaModals[ modalId ].config.sticky ){
 				if( ! calderaModals[ modalId ].config.minimized ){
 					calderaModals[ modalId ].config.minimized = true;
