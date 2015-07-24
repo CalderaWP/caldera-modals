@@ -351,7 +351,7 @@
 		// set position;
 		positionModals();
 		// return main object
-		return this;
+		return calderaModals[ modalId ];
 	}
 
 	$.fn.calderaModal = function( opts ){
