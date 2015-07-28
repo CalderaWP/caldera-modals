@@ -204,11 +204,13 @@
 		}, opts );
 		if( !calderaBackdrop && ! defaults.sticky ){
 			calderaBackdrop = $('<div>', {"class" : "caldera-backdrop"});
-			calderaBackdrop.on('click', function( e ){
-				if( e.target == this ){
-					closeModal();
-				}
-			});
+			if( ! defaults.focus ){
+				calderaBackdrop.on('click', function( e ){
+					if( e.target == this ){
+						closeModal();
+					}
+				});
+			}
 			pageBody.append( calderaBackdrop );
 			calderaBackdrop.hide();
 		}
