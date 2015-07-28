@@ -204,11 +204,13 @@
 		}, opts );
 		if( !calderaBackdrop && ! defaults.sticky ){
 			calderaBackdrop = $('<div>', {"class" : "caldera-backdrop"});
-			calderaBackdrop.on('click', function( e ){
-				if( e.target == this ){
-					closeModal();
-				}
-			});
+			if( ! defaults.focus ){
+				calderaBackdrop.on('click', function( e ){
+					if( e.target == this ){
+						closeModal();
+					}
+				});
+			}
 			pageBody.append( calderaBackdrop );
 			calderaBackdrop.hide();
 		}
@@ -306,7 +308,7 @@
 			
 			calderaModals[ modalId ].title.html( defaults.title ).appendTo( calderaModals[ modalId ].header );
 			calderaModals[ modalId ].title.css({ padding: defaults.padding });
-
+			calderaModals[ modalId ].title.append( calderaModals[ modalId ].closer );
 			if( calderaModals[ modalId ].config.sticky ){
 				if( ! calderaModals[ modalId ].config.minimized ){
 					calderaModals[ modalId ].config.minimized = true;
@@ -351,7 +353,7 @@
 		// set position;
 		positionModals();
 		// return main object
-		return this;
+		return calderaModals[ modalId ];
 	}
 
 	$.fn.calderaModal = function( opts ){
