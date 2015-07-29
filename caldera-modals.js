@@ -340,7 +340,8 @@
 				  try {
 				  	var contentElement = $( defaults.content );
 				  	if( contentElement.length ){
-				  		calderaModals[ modalId ].content.html( contentElement.html() );
+				  		calderaModals[ modalId ].content.append( contentElement.detach() );
+						contentElement.show();
 				  	}else{
 				  		calderaModals[ modalId ].content.html( defaults.content );
 				  	}
