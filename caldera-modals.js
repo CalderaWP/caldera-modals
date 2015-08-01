@@ -376,7 +376,7 @@
 
 
 
-	$(document).on('click', '[data-modal]', function( e ){
+	$(document).on('click', '[data-modal]:not(.caldera-modal-closer)', function( e ){
 		e.preventDefault();
 		$(this).calderaModal();
 	});
