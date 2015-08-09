@@ -1,0 +1,17 @@
+{
+    "name": "caldera-modals",
+    "version": "1.0.0",
+    "author": "David Cramer <David@CalderaWP.com>",
+    "description": "Simple modals controlled by html attributes or script",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CalderaWP/caldera-modals/"
+    },
+    "keywords": [
+    ],
+    "licenses": [{
+        "type": "GLPv2",
+        "url": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"
+    }],
+    
+}
