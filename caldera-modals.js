@@ -310,8 +310,11 @@
 			calderaModals[ modalId ].title.css({ padding: defaults.padding });
 			calderaModals[ modalId ].title.append( calderaModals[ modalId ].closer );
 			if( calderaModals[ modalId ].config.sticky ){
-				if( ! calderaModals[ modalId ].config.minimized ){
-					calderaModals[ modalId ].config.minimized = true;
+				if( calderaModals[ modalId ].config.minimized && true !== calderaModals[ modalId ].config.minimized ){
+					setTimeout( function(){
+						calderaModals[ modalId ].title.trigger('click');
+					}, parseInt( calderaModals[ modalId ].config.minimized ) );
+					calderaModals[ modalId ].config.minimized = false;
 				}
 				calderaModals[ modalId ].closer.hide();
 				calderaModals[ modalId ].title.addClass( 'caldera-modal-closer' ).data('modal', modalId).appendTo( calderaModals[ modalId ].header );
