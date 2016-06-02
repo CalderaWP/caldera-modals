@@ -1,4 +1,4 @@
-.caldera-modal-wrap .spinner.loading {
+.calmodal-modal-wrap .spinner.loading {
   background-position: center center;
   display: inline-block;
   float: none;
@@ -8,14 +8,14 @@
 }
 
 /* MODALS */
-html.has-caldera-modal{
+html.has-calmodal-modal{
   overflow: hidden;
 
 }
 body{
   overflow-y: scroll;
 }
-.caldera-backdrop {
+.calmodal-backdrop {
   background: rgba(0,0,0,0.3);
   bottom: 0;
   display: block;
@@ -25,7 +25,7 @@ body{
   top: 0;
   z-index: 100100;
 }
-.caldera-modal-wrap {
+.calmodal-modal-wrap {
   background-color: #FFFFFF;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
   display: block;
@@ -33,47 +33,40 @@ body{
   margin: 0 auto;
   z-index: 100105;
 }
-
-.caldera-modal-wrap.caldera-animate{
-  transform:  translate(0,0) !important;
-}
-
-.caldera-modal-title {
+.calmodal-modal-title {
   border-bottom: 1px solid #EFEFEF;
 }
 
-.caldera-modal-closer {
+.calmodal-modal-closer {
   color: #808080;
-  position: absolute;
-  right: 0;
-  top: 0;
+  float: right;
   font-size: 32px;
-  text-decoration: none !important;
+  text-decoration: none;
   line-height: 0;
   border: 0;
 }
-.caldera-modal-closer:hover {
+.calmodal-modal-closer:hover {
   background-color: rgba(0,0,0,.1);
 }
 
-.caldera-modal-title > h3 {
+.calmodal-modal-title > h3 {
   font-weight: 400;
   margin: 0;
   padding: 12px 40px 12px 12px;
   clear: none;
 }
 
-.caldera-modal-body {
+.calmodal-modal-body {
   -moz-box-sizing:    border-box;   /* Firefox 1, probably can drop this */
   -webkit-box-sizing: border-box;   /* Safari 3-4, also probably droppable */
   box-sizing:        border-box;   /* Everything else */
   overflow: auto;
 }
 
-.caldera-modal-body.has-buttons{
+.calmodal-modal-body.has-buttons{
   bottom: 53px;
 }
-.caldera-modal-footer {
+.calmodal-modal-footer {
   background: none repeat scroll 0 0 #EFEFEF;
   border-top: 1px solid #E0E0E0;
 }
@@ -81,7 +74,7 @@ body{
 
 @media (max-width: 600px) {
   /* Small Screens */
-  .caldera-modal-wrap.caldera-front-modal-wrap{
+  .calmodal-modal-wrap.calmodal-front-modal-wrap{
     bottom: 0;
     display: block;
     left: 0;
@@ -95,7 +88,7 @@ body{
 
 
 /* EXPERIMENTAL TABS */
-.caldera-modal-wrap .navtabs {
+.calmodal-modal-wrap .navtabs {
   background-color: #f1f1f1;
   border-right: 1px solid #dfdfdf;
   bottom: 0;
@@ -111,13 +104,13 @@ body{
   top: 0;
   width: 150px;
 }
-.caldera-modal-wrap .navtabs > li{
+.calmodal-modal-wrap .navtabs > li{
   margin: 0;
 }
-.caldera-modal-wrap .navtabs > li:hover{
+.calmodal-modal-wrap .navtabs > li:hover{
   background-color: #dfdfdf;
 }
-.caldera-modal-wrap .navtabs > li a {
+.calmodal-modal-wrap .navtabs > li a {
   color: rgb(175, 175, 0);
   display: block;
   padding: 8px 12px;
@@ -125,26 +118,10 @@ body{
   text-overflow: ellipsis;  
   overflow: hidden;
 }
-.caldera-modal-body.has-tabs {
+.calmodal-modal-body.has-tabs {
   margin-left: 150px;
 }
-.caldera-modal-wrap .navtabs > li.selected > a {
+.calmodal-modal-wrap .navtabs > li.selected > a {
   background: none repeat scroll 0 0 rgb(175, 175, 0);
   color: #fff !important;
-}
-
-.caldera-sticky-modal{
-  z-index: 100099;
-  position: fixed;
-}
-.caldera-sticky-modal > .caldera-modal-title{ cursor: pointer; }
-.caldera-sticky-modal.bottom-left{ bottom: 0; left: 0; }
-.caldera-sticky-modal.bottom-right{ bottom: 0; right: 0; }
-.caldera-sticky-modal.top-left{ top: 0; left: 0; }
-.caldera-sticky-modal.top-right{ top: 0; right: 0; }
-
-.caldera-sticky-modal.top-left .caldera-modal-title ,
-.caldera-sticky-modal.top-right .caldera-modal-title {
-  border-bottom: 0;
-  border-top: 1px solid #EFEFEF;
 }
